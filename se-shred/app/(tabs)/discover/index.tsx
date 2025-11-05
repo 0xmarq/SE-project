@@ -1,54 +1,48 @@
+import React, { useEffect, useState } from "react";
+import { ScrollView, Text, View, TouchableOpacity, Image, ActivityIndicator } from "react-native";
 import { useRouter } from "expo-router";
-import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
-import { Searchh } from '../training/index';
-
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/firebaseConfig";  // 👈 import your firebase setup
 
 export default function DiscoverScreen() {
   const router = useRouter();
+  const [workouts, setWorkouts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const workouts = [
-    { 
-      id: "abs", 
-      title: "Only 4 Moves for Abs", 
-      desc: "4 simple exercises only! Burn belly fat and firm your abs.",
-      img: { uri: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80" }
-    },
-    { 
-      id: "belly-fat", 
-      title: "Belly Fat Burner HIIT Beginner", 
-      desc: "14 min • Beginner",
-      img: { uri: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80" }
-    },
-    { 
-      id: "no-jump", 
-      title: "Lose Fat (No Jumping!)", 
-      desc: "15 min • Intermediate",
-      img: { uri: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80" }
-    },
-  ];
+  useEffect(() => {
+    const fetchWorkouts = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, "workouts"));
+        const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setWorkouts(data);
+      } catch (err) {
+        console.error("🔥 Error fetching workouts:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchWorkouts();
+  }, []);
+
+  if (loading) return <ActivityIndicator size="large" color="blue" />;
 
   return (
-    <View style={{flex: 1, backgroundColor: "white", paddingTop: 5}}>
-      <ScrollView style={{ flex: 1, backgroundColor: "white", padding: 20 }} >
-        <Text style={{ fontWeight: "bold", fontSize: 26, marginBottom: 20, paddingTop: 25 }}>Discover</Text>
-        <Searchh placeholder="Search for nearby gyms.. "/>
-        {workouts.map((item) => (
-          <TouchableOpacity
-            key={item.id}
-            style={{ marginBottom: 20 }}
-            onPress={() => router.push(`/discover/${item.id}`)}
-          >
-            <Image
-              source={item.img}
-              style={{ width: "100%", height: 200, borderRadius: 12 }}
-            />
-            <View style={{ marginTop: 10 }}>
-              <Text style={{ fontWeight: "bold", fontSize: 18 }}>{item.title}</Text>
-              <Text style={{ color: "gray" }}>{item.desc}</Text>
-            </View>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-    </View>
+    <ScrollView style={{ padding: 20, backgroundColor: "#fff" }}>
+      <Text style={{ fontSize: 26, fontWeight: "bold", marginBottom: 20 }}>Discover</Text>
+      {workouts.map((w) => (
+        <TouchableOpacity key={w.id} onPress={() => router.push(`/discover/${w.id}`)}>
+          <Image
+            source={{ uri: w.image_url || "https://via.placeholder.com/400x200" }}
+            style={{ width: "100%", height: 200, borderRadius: 12 }}
+          />
+          <View style={{ marginTop: 10 }}>
+            <Text style={{ fontSize: 18, fontWeight: "bold" }}>{w.name}</Text>
+            <Text style={{ color: "gray" }}>{w.description}</Text>
+            <Text style={{ color: "#888" }}>Muscle: {w.muscle_group}</Text>
+            <Text style={{ color: "#888" }}>Equipment: {w.equipment}</Text>
+          </View>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 }
