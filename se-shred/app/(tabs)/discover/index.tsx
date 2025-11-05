@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import { Searchh } from '../training/index';
-
+import MapComponent from "@/components/Map";
 
 export default function DiscoverScreen() {
   const router = useRouter();
@@ -17,7 +17,12 @@ export default function DiscoverScreen() {
     <View style={{flex: 1, backgroundColor: "white", paddingTop: 5}}>
     <ScrollView style={{ flex: 1, backgroundColor: "white", padding: 20 }} >
       <Text style={{ fontWeight: "bold", fontSize: 26, marginBottom: 20, paddingTop: 25 }}>Discover</Text>
+
+      <View>
         <Searchh placeholder="Search for nearby gyms.. "/>
+        <MapComponent />
+      </View>
+        
       {workouts.map((item) => (
         <TouchableOpacity
           key={item.id}
