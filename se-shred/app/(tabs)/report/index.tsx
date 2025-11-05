@@ -1,398 +1,144 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
-import { Calendar } from 'react-native-calendars';
-import { LineChart } from 'react-native-chart-kit';
-import { Ionicons } from '@expo/vector-icons';
+import React from "react";
+import { View, Text, ScrollView, StyleSheet, StatusBar } from "react-native";
 
-const screenWidth = Dimensions.get('window').width;
+export default function ReportPage() {
+  const stats = [
+    { label: "Workouts", value: 42, goal: 60 },
+    { label: "Calories", value: 12340, goal: 15000 },
+    { label: "Steps", value: 7850, goal: 10000 },
+  ];
 
-export default function App() {
-  const markedDates = {
-    '2025-11-05': { selected: true, marked: true, selectedColor: '#007AFF' },
-  };
-
-  const weightData = {
-    labels: [],
-    datasets: [
-      {
-        data: [0],
-        color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-        strokeWidth: 2,
-      },
-    ],
-  };
+  const progressData = [
+    { day: "Mon", progress: 0.8 },
+    { day: "Tue", progress: 0.4 },
+    { day: "Wed", progress: 0.6 },
+    { day: "Thu", progress: 0.9 },
+    { day: "Fri", progress: 0.7 },
+    { day: "Sat", progress: 0.5 },
+    { day: "Sun", progress: 0.3 },
+  ];
 
   return (
-    <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        
+    <ScrollView style={styles.container}>
+      <StatusBar barStyle="dark-content" />
+      <Text style={styles.header}>Your Weekly Report 🏋️</Text>
 
-        {/* Title */}
-        <Text style={styles.title}>REPORT</Text>
+      {/* Summary Section */}
+      <View style={styles.summaryContainer}>
+        {stats.map((item, index) => (
+          <View key={index} style={styles.card}>
+            <Text style={styles.cardLabel}>{item.label}</Text>
+            <Text style={styles.cardValue}>{item.value}</Text>
+            <Text style={styles.cardGoal}>Goal: {item.goal}</Text>
+          </View>
+        ))}
+      </View>
 
-        {/* Stats */}
-        <View style={styles.statsContainer}>
-          <View style={styles.statItem}>
-            <Ionicons name="flame" size={28} color="#8E8E93" />
-            <Text style={styles.statValue}>1</Text>
-            <Text style={styles.statLabel}>Workout</Text>
-          </View>
-          <View style={styles.statItem}>
-            <Ionicons name="flame-outline" size={28} color="#FF3B30" />
-            <Text style={styles.statValue}>0</Text>
-            <Text style={styles.statLabel}>Kcal</Text>
-          </View>
-          <View style={styles.statItem}>
-            <Ionicons name="time-outline" size={28} color="#007AFF" />
-            <Text style={styles.statValue}>0</Text>
-            <Text style={styles.statLabel}>Minute</Text>
-          </View>
-        </View>
-
-        {/* History */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>History</Text>
-            <TouchableOpacity>
-              <Text style={styles.sectionLink}>All records</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.calendarContainer}>
-            <Calendar
-              current={'2025-11-05'}
-              markedDates={markedDates}
-              hideArrows={true}
-              hideExtraDays={true}
-              disableMonthChange={true}
-              firstDay={0}
-              enableSwipeMonths={false}
-              theme={{
-                backgroundColor: '#fff',
-                calendarBackground: '#fff',
-                textSectionTitleColor: '#b6c1cd',
-                dayTextColor: '#2d4150',
-                textDisabledColor: '#d9e1e8',
-                monthTextColor: '#000',
-                selectedDayBackgroundColor: '#007AFF',
-                selectedDayTextColor: '#fff',
-                todayTextColor: '#007AFF',
-                arrowColor: '#007AFF',
-              }}
-              renderHeader={() => null}
-              style={{ paddingLeft: 0, paddingRight: 0 }}
-            />
-          </View>
-
-          {/* Streak */}
-          <View style={styles.streakContainer}>
-            <View style={styles.streakItem}>
-              <Text style={styles.streakLabel}>Day Streak</Text>
-              <View style={styles.streakValue}>
-                <Ionicons name="flame" size={20} color="#FF3B30" />
-                <Text style={styles.streakNumber}>1</Text>
-              </View>
-            </View>
-            <View style={styles.streakItem}>
-              <Text style={styles.streakLabel}>Personal Best</Text>
-              <Text style={styles.streakNumber}>1 day</Text>
-            </View>
+      {/* Progress Section */}
+      <Text style={styles.sectionTitle}>Workout Consistency</Text>
+      {progressData.map((p, index) => (
+        <View key={index} style={styles.barRow}>
+          <Text style={styles.dayText}>{p.day}</Text>
+          <View style={styles.barBackground}>
+            <View style={[styles.barFill, { width: `${p.progress * 100}%` }]} />
           </View>
         </View>
+      ))}
 
-        {/* Weight */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Weight</Text>
-            <TouchableOpacity style={styles.logButton}>
-              <Text style={styles.logButtonText}>Log</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.weightLabels}>
-            <Text style={styles.weightLabel}>Current</Text>
-            <View style={styles.weightExtremes}>
-              <Text style={styles.extremeLabel}>Heaviest ---</Text>
-              <Text style={styles.extremeLabel}>Lightest ---</Text>
-            </View>
-          </View>
-
-          <LineChart
-            data={weightData}
-            width={screenWidth - 40}
-            height={220}
-            chartConfig={{
-              backgroundColor: '#fff',
-              backgroundGradientFrom: '#fff',
-              backgroundGradientTo: '#fff',
-              decimalPlaces: 0,
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              style: { borderRadius: 16 },
-              propsForDots: { r: '0' },
-            }}
-            bezier
-            style={{ marginVertical: 8, borderRadius: 16 }}
-            withHorizontalLines={false}
-            withVerticalLines={false}
-            withOuterLines={false}
-            withInnerLines={false}
-            yAxisLabel=""
-            yAxisSuffix=""
-            segments={4}
-            fromZero={true}
-            yLabelsOffset={10}
-            formatYLabel={() => ''}
-          />
-
-          {/* Y-Axis Labels */}
-          <View style={styles.yAxisLabels}>
-            {[700, 600, 500, 400, 300, 200].map((val) => (
-              <Text key={val} style={styles.yLabel}>
-                {val}
-              </Text>
-            ))}
-          </View>
-        </View>
-
-        
-      </ScrollView>
-
-      
-    </View>
+      {/* Notes */}
+      <View style={styles.notesContainer}>
+        <Text style={styles.sectionTitle}>Performance Summary</Text>
+        <Text style={styles.noteText}>
+          💪 Great week! You hit most of your targets. Keep pushing and stay
+          consistent.
+        </Text>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: "#fff",
+    padding: 20,
+    paddingTop: 60,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingTop: 10,
-    paddingBottom: 5,
-  },
-  time: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  statusBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-  },
-  network: {
-    fontSize: 12,
-    color: '#000',
-  },
-  battery: {
-    fontSize: 12,
-    marginLeft: 2,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    marginLeft: 20,
+    fontSize: 26,
+    fontWeight: "bold",
+    color: "#111",
     marginBottom: 20,
+    textAlign: "center",
   },
-  statsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    backgroundColor: '#fff',
-    marginHorizontal: 20,
-    borderRadius: 16,
-    paddingVertical: 20,
-    marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 5,
-    elevation: 2,
+  summaryContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 30,
   },
-  statItem: {
-    alignItems: 'center',
+  card: {
     flex: 1,
+    backgroundColor: "#f9f9f9",
+    marginHorizontal: 5,
+    padding: 15,
+    borderRadius: 12,
+    alignItems: "center",
+    elevation: 3,
   },
-  statValue: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    marginVertical: 8,
+  cardLabel: {
+    fontSize: 16,
+    color: "#333",
   },
-  statLabel: {
-    fontSize: 14,
-    color: '#8E8E93',
+  cardValue: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#4CAF50",
+    marginTop: 5,
   },
-  section: {
-    marginHorizontal: 20,
-    marginBottom: 20,
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
+  cardGoal: {
+    fontSize: 13,
+    color: "#888",
+    marginTop: 3,
   },
   sectionTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "600",
+    color: "#111",
+    marginBottom: 10,
+    marginTop: 10,
   },
-  sectionLink: {
-    fontSize: 14,
-    color: '#007AFF',
-  },
-  calendarContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    overflow: 'hidden',
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 5,
-    elevation: 2,
-  },
-  streakContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    backgroundColor: '#fff',
-    paddingVertical: 16,
-    borderRadius: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 5,
-    elevation: 2,
-  },
-  streakItem: {
-    alignItems: 'center',
-  },
-  streakLabel: {
-    fontSize: 14,
-    color: '#8E8E93',
-    marginBottom: 4,
-  },
-  streakValue: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-  },
-  streakNumber: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  logButton: {
-    backgroundColor: '#007AFF',
-    paddingHorizontal: 20,
-    paddingVertical: 8,
-    borderRadius: 20,
-  },
-  logButtonText: {
-    color: '#fff',
-    fontWeight: '600',
-  },
-  weightLabels: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  barRow: {
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 8,
   },
-  weightLabel: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  weightExtremes: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  extremeLabel: {
-    fontSize: 12,
-    color: '#8E8E93',
-  },
-  yAxisLabels: {
-    position: 'absolute',
-    left: 10,
-    top: 20,
-    bottom: 20,
-    justifyContent: 'space-between',
-  },
-  yLabel: {
-    fontSize: 12,
-    color: '#8E8E93',
-  },
-  adBanner: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#000',
-    marginHorizontal: 20,
-    borderRadius: 12,
-    padding: 12,
-    marginBottom: 80,
-  },
-  adIcon: {
+  dayText: {
     width: 40,
-    height: 40,
-    backgroundColor: '#34C759',
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 12,
+    fontSize: 14,
+    color: "#333",
   },
-  adIconText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  adContent: {
+  barBackground: {
     flex: 1,
+    height: 12,
+    backgroundColor: "#eee",
+    borderRadius: 6,
   },
-  adTitle: {
-    color: '#fff',
-    fontWeight: '600',
-    marginBottom: 4,
+  barFill: {
+    height: "100%",
+    backgroundColor: "#4CAF50",
+    borderRadius: 6,
   },
-  progressBar: {
-    height: 4,
-    backgroundColor: '#333',
-    borderRadius: 2,
-    overflow: 'hidden',
+  notesContainer: {
+    backgroundColor: "#f9f9f9",
+    borderRadius: 12,
+    padding: 15,
+    elevation: 2,
+    marginTop: 20,
+    marginBottom: 40,
   },
-  progressFill: {
-    width: '60%',
-    height: '100%',
-    backgroundColor: '#34C759',
-  },
-  installButton: {
-    backgroundColor: '#34C759',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 8,
-  },
-  installText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-  bottomNav: {
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderTopWidth: 1,
-    borderTopColor: '#E5E5EA',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    justifyContent: 'space-around',
-  },
-  navItem: {
-    alignItems: 'center',
-  },
-  navLabel: {
-    fontSize: 12,
-    marginTop: 4,
-    color: '#8E8E93',
+  noteText: {
+    color: "#444",
+    fontSize: 15,
+    lineHeight: 22,
   },
 });
