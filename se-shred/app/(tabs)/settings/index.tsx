@@ -1,4 +1,3 @@
-// SettingsScreen.tsx
 import React from 'react';
 import {
   View,
@@ -20,15 +19,7 @@ export default function SettingsScreen() {
   return (
     <SafeAreaView style={styles.container}>
       {/* ----- Status bar mock ----- */}
-      <View style={styles.statusBar}>
-        <Text style={styles.time}>1:33</Text>
-        <View style={styles.statusRight}>
-          <Text style={styles.statusText}>LTE</Text>
-          <View style={styles.signal} />
-          <Text style={styles.statusText}>5G</Text>
-          <Text style={styles.battery}>34%</Text>
-        </View>
-      </View>
+      
 
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* ----- Header ----- */}
