@@ -5,22 +5,22 @@ const stretches = [
   {
     id: 1,
     title: "Lower Body Stretching 7 Min",
-    image: "https://i.imgur.com/LFSGxXM.jpeg",
+    image: "https://images.pexels.com/photos/302679/pexels-photo-302679.jpeg?auto=compress&cs=tinysrgb&w=800&h=120&fit=crop",
   },
   {
     id: 2,
     title: "Lower Back Pain Relief",
-    image: "https://i.imgur.com/zxEXxZR.jpeg",
+    image: "https://images.pexels.com/photos/260367/pexels-photo-260367.jpeg?auto=compress&cs=tinysrgb&w=800&h=120&fit=crop",
   },
   {
     id: 3,
     title: "Morning Flex Routine",
-    image: "https://i.imgur.com/5mTqJd2.jpeg",
+    image: "https://images.pexels.com/photos/247851/pexels-photo-247851.jpeg?auto=compress&cs=tinysrgb&w=800&h=120&fit=crop",
   },
   {
     id: 4,
     title: "Full Body Warm-Up",
-    image: "https://i.imgur.com/8XK1T9P.jpeg",
+    image: "https://images.pexels.com/photos/247676/pexels-photo-247676.jpeg?auto=compress&cs=tinysrgb&w=800&h=120&fit=crop",
   },
 ];
 
@@ -74,6 +74,7 @@ export default function StretchWarmUp() {
                 width: "100%",
                 height: "100%",
               }}
+              resizeMode="cover"
             />
             <View
               style={{

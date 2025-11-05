@@ -8,7 +8,7 @@ const challenges = [
       "Start your body-toning journey to target all muscle groups and build your dream body in 4 weeks!",
     color: "#2563EB", 
     image:
-      "https://i.imgur.com/5jYQw3E.png", 
+      "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80", 
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ const challenges = [
       "Take on this challenge to control your calorie intake and boost muscle gains.",
     color: "#9333EA", 
     image:
-      "https://i.imgur.com/y8e2jXH.png",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&q=80",
   },
 ];
 

@@ -8,6 +8,7 @@
     "scheme": "seshred",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "entry-point":"expo-router/entry",
     "ios": {
       "supportsTablet": true
     },
