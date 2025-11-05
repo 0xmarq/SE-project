@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, ScrollView, StyleSheet, StatusBar } from "react-native";
 
-export default function App() {
+export default function ReportPage() {
   const stats = [
     { label: "Workouts", value: 42, goal: 60 },
     { label: "Calories", value: 12340, goal: 15000 },
