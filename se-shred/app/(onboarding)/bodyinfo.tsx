@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 
 export default function BodyInfo() {
   const router = useRouter();
@@ -19,6 +19,8 @@ export default function BodyInfo() {
     await AsyncStorage.setItem("onboardingCompleted", "true");
     router.replace("/(auth)/login"); 
   };
+
+  
   return (
     <View style={{ flex: 1, backgroundColor: "white", padding: 20 }}>
       <Text
@@ -45,8 +47,6 @@ export default function BodyInfo() {
         <Text style={{ fontSize: 40, color: "#007AFF", fontWeight: "bold" }}>{weight.toFixed(1)}</Text>
         <Text style={{ fontSize: 16, marginLeft: 5 }}>{unit}</Text>
       </View>
-
-      {/* Unit Toggle */}
       <View style={{ flexDirection: "row", justifyContent: "center", marginBottom: 40 }}>
         <TouchableOpacity onPress={() => setUnit("kg")} style={{
           backgroundColor: unit === "kg" ? "#007AFF" : "#EAEAEA",
@@ -68,8 +68,7 @@ export default function BodyInfo() {
         <Text style={{ fontSize: 40, color: "#007AFF", fontWeight: "bold" }}>{height.inch}</Text>
         <Text style={{ fontSize: 16, marginHorizontal: 3 }}>in</Text>
       </View>
-
-      {/* Unit Toggle */}
+      
       <View style={{ flexDirection: "row", justifyContent: "center", marginBottom: 60 }}>
         <TouchableOpacity onPress={() => setHeightUnit("cm")} style={{
           backgroundColor: heightUnit === "cm" ? "#007AFF" : "#EAEAEA",

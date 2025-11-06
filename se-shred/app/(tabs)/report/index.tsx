@@ -1,123 +1,16 @@
 // app/(tabs)/report/index.tsx
 import React from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
   Platform,
+  ScrollView,
   StatusBar,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useColorScheme } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 
 const isWeb = Platform.OS === 'web';
 
-export default function WeeklyReport() {
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
-
-  const stats = [
-    { label: 'Workout', value: 42, goal: 60 },
-    { label: 'Calories', value: 12340, goal: 15000 },
-    { label: 'Steps', value: 7850, goal: 10000 },
-  ];
-
-  const consistency = [
-    { day: 'Mon', progress: 90 },
-    { day: 'Tue', progress: 60 },
-    { day: 'Wed', progress: 70 },
-    { day: 'Thu', progress: 95 },
-    { day: 'Fri', progress: 75 },
-    { day: 'Sat', progress: 50 },
-    { day: 'Sun', progress: 30 },
-  ];
-
-  return (
-    <>
-      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
-      <LinearGradient
-        colors={isDark ? ['#111827', '#1F2937'] : ['#F9FAFB', '#FFFFFF']}
-        style={styles.container}
-      >
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
-          {/* Header */}
-          <View style={styles.header}>
-            <Text style={[styles.title, isDark && styles.textDark]}>
-              Your Weekly Report
-            </Text>
-            <Ionicons name="barbell" size={28} color="#F59E0B" />
-          </View>
-
-          {/* Stats Cards */}
-          <View style={styles.statsGrid}>
-            {stats.map((stat, i) => (
-              <View key={i} style={[styles.statCard, isDark && styles.cardDark]}>
-                <Text style={[styles.statLabel, isDark && styles.textMuted]}>
-                  {stat.label}
-                </Text>
-                <Text style={styles.statValue}>{stat.value}</Text>
-                <Text style={[styles.statGoal, isDark && styles.textMuted]}>
-                  Goal: {stat.goal}
-                </Text>
-                <View style={styles.progressBg}>
-                  <View
-                    style={[
-                      styles.progressFill,
-                      { width: `${(stat.value / stat.goal) * 100}%` },
-                    ]}
-                  />
-                </View>
-              </View>
-            ))}
-          </View>
-
-          {/* Consistency */}
-          <View style={[styles.section, isDark && styles.cardDark]}>
-            <Text style={[styles.sectionTitle, isDark && styles.textDark]}>
-              Workout Consistency
-            </Text>
-            {consistency.map((item, i) => (
-              <View key={i} style={styles.row}>
-                <Text style={[styles.day, isDark && styles.textDark]}>
-                  {item.day}
-                </Text>
-                <View style={styles.barBg}>
-                  <View
-                    style={[
-                      styles.barFill,
-                      { width: `${item.progress}%` },
-                    ]}
-                  />
-                </View>
-              </View>
-            ))}
-          </View>
-
-          {/* Summary */}
-          <View style={[styles.summaryCard, isDark && styles.cardDark]}>
-            <Text style={[styles.summaryTitle, isDark && styles.textDark]}>
-              Performance Summary
-            </Text>
-            <View style={styles.summaryContent}>
-              <Text style={styles.summaryEmoji}>Fire</Text>
-              <Text style={[styles.summaryText, isDark && styles.textDark]}>
-                Great week! You hit most of your targets. Keep pushing and stay consistent.
-              </Text>
-            </View>
-          </View>
-
-          {/* Bottom padding */}
-          <View style={{ height: 40 }} />
-        </ScrollView>
-      </LinearGradient>
-    </>
-import React from "react";
-import { View, Text, ScrollView, StyleSheet, StatusBar } from "react-native";
 
 export default function ReportPage() {
   const stats = [
@@ -172,10 +65,9 @@ export default function ReportPage() {
         </Text>
       </View>
     </ScrollView>
-  );
-}
+    );
+  }
 
-// FINAL STYLES — NO BOTTOM NAV
 const styles = StyleSheet.create({
   container: { flex: 1 },
   scrollContent: {
@@ -248,4 +140,5 @@ const styles = StyleSheet.create({
   },
   summaryEmoji: { fontSize: 24, marginRight: 12 },
   summaryText: { fontSize: 16, color: '#374151', lineHeight: 22, flex: 1 },
-});
+  });
+

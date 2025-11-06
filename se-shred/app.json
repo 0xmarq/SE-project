@@ -8,9 +8,13 @@
     "scheme": "seshred",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "entry-point":"expo-router/entry",
     "ios": {
       "supportsTablet": true
+    },
+    "extra": {
+      "supabaseUrl": "https://vluebhgtzkcwskxdoqgr.supabase.co",
+      "supabaseAnonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZsdWViaGd0emtjd3NreGRvcWdyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIyODg1MDAsImV4cCI6MjA3Nzg2NDUwMH0.RnUzhwfhucdTbyX3gMRU0AP208G39-FYDu_e-GXF_4I"
+
     },
     "android": {
       "config": {
@@ -28,7 +32,7 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "output": "static",
+      "output": "single",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [

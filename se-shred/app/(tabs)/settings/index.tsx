@@ -1,26 +1,33 @@
 import React from 'react';
 import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  Switch,
-  SafeAreaView,
-  StyleSheet,
   Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import FeatherIcon from 'react-native-vector-icons/Feather';
+
+
+import { supabase } from '@/lib/supabaseClient';
+import { router } from 'expo-router';
+
+async function signOut() {
+  await supabase.auth.signOut();
+  router.replace('/(auth)/login');
+}
 
 export default function SettingsScreen() {
   const [healthSync, setHealthSync] = React.useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* ----- Status bar mock ----- */}
       
-
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* ----- Header ----- */}
         <View style={styles.header}>
